@@ -53,3 +53,4 @@ out/
 
 *.store
 *.jks
+/app/map.txt
