@@ -1271,7 +1271,7 @@ public class BrowserActivity extends BaseActivity
                         }
                     }
                     if (!duplicate) {
-                        showShortToast(BrowserActivity.this, getString(R.string.added_to_upload_tasks));
+//                        showShortToast(BrowserActivity.this, getString(R.string.added_to_upload_tasks));
                         final SeafRepo repo = dataManager.getCachedRepoByID(navContext.getRepoID());
                         if (repo != null && repo.canLocalDecrypt()) {
                             addUploadBlocksTask(navContext.getRepoID(), navContext.getRepoName(), navContext.getDirPath(), path);
@@ -1303,7 +1303,7 @@ public class BrowserActivity extends BaseActivity
                         }
                     }
                     if (!duplicate) {
-                        showShortToast(BrowserActivity.this, getString(R.string.added_to_upload_tasks));
+//                        showShortToast(BrowserActivity.this, getString(R.string.added_to_upload_tasks));
                         final SeafRepo repo = dataManager.getCachedRepoByID(navContext.getRepoID());
                         if (repo != null && repo.canLocalDecrypt()) {
                             addUploadBlocksTask(navContext.getRepoID(), navContext.getRepoName(), navContext.getDirPath(), path);

@@ -129,10 +129,10 @@ public class TransferActivity extends BaseActivity implements Toolbar.OnMenuItem
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
-        case KeyEvent.KEYCODE_MENU:
-            if (overFlowMenu != null) {
-                overFlowMenu.performIdentifierAction(R.id.transfer_overflow_menu, 0);
-            }
+            case KeyEvent.KEYCODE_MENU:
+                if (overFlowMenu != null) {
+                    overFlowMenu.performIdentifierAction(R.id.transfer_overflow_menu, 0);
+                }
         }
         return super.onKeyUp(keyCode, event);
     }
@@ -177,16 +177,31 @@ public class TransferActivity extends BaseActivity implements Toolbar.OnMenuItem
 
                 return true;
 
+            case R.id.clear_finished_transfer_tasks:
+                if (whichTab == TransferTaskAdapter.TaskType.DOWNLOAD_TASK) {
+                    getDownloadTaskFragment().removeAllFinishedDownloadTasks();
+
+                } else getUploadTaskFragment().removeAllFinishedUploadTasks();
+
+                return true;
+
+            case R.id.retry_failed_tasks:
+                if (whichTab == TransferTaskAdapter.TaskType.DOWNLOAD_TASK) {
+                    getDownloadTaskFragment().retryAllFailedTasks();
+
+                } else getUploadTaskFragment().retryAllFailedTasks();
+
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public DownloadTaskFragment getDownloadTaskFragment() {
-        return (DownloadTaskFragment)getFragment(0);
+        return (DownloadTaskFragment) getFragment(0);
     }
 
     public UploadTaskFragment getUploadTaskFragment() {
-        return (UploadTaskFragment)getFragment(1);
+        return (UploadTaskFragment) getFragment(1);
     }
 
     public Fragment getFragment(int index) {
@@ -217,31 +232,31 @@ public class TransferActivity extends BaseActivity implements Toolbar.OnMenuItem
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-            case 0:
-                if (downloadsFragment == null) {
-                    downloadsFragment = new DownloadTaskFragment();
-                }
-                return downloadsFragment;
-            case 1:
-                if (uploadsFragment == null) {
-                    uploadsFragment = new UploadTaskFragment();
-                }
-                return uploadsFragment;
-            default:
-                return new Fragment();
+                case 0:
+                    if (downloadsFragment == null) {
+                        downloadsFragment = new DownloadTaskFragment();
+                    }
+                    return downloadsFragment;
+                case 1:
+                    if (uploadsFragment == null) {
+                        uploadsFragment = new UploadTaskFragment();
+                    }
+                    return uploadsFragment;
+                default:
+                    return new Fragment();
             }
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-            case 0:
-                return downloadTabTitle;
-            case 1:
-                return uploadTabTitle;
+                case 0:
+                    return downloadTabTitle;
+                case 1:
+                    return uploadTabTitle;
 
-            default:
-                return null;
+                default:
+                    return null;
             }
         }
 
