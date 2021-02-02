@@ -77,7 +77,7 @@ public class DataManager {
      * @throws IOException if the file could not be created.
      */
     public static File createTempFile() throws IOException {
-        return File.createTempFile("file-", ".tmp", storageManager.getTempDir());
+        return File.createTempFile("file-", ".tmp", SeadroidApplication.getAppContext().getExternalCacheDir());
     }
 
     /**
@@ -174,22 +174,22 @@ public class DataManager {
 
     private File getFile4RepoCache(String repoID) {
         String filename = "repo-" + (account.server + account.email + repoID).hashCode() + ".dat";
-        return new File(storageManager.getJsonCacheDir(), filename);
+        return new File(SeadroidApplication.getAppContext().getExternalCacheDir(), filename);
     }
 
     private File getFileForReposCache() {
         String filename = "repos-" + (account.server + account.email).hashCode() + ".dat";
-        return new File(storageManager.getJsonCacheDir(), filename);
+        return new File(SeadroidApplication.getAppContext().getExternalCacheDir(), filename);
     }
 
     private File getFileForDirentCache(String dirID) {
         String filename = "dirent-" + dirID + ".dat";
-        return new File(storageManager.getJsonCacheDir() + "/" + filename);
+        return new File(SeadroidApplication.getAppContext().getExternalCacheDir() + "/" + filename);
     }
 
     private File getFileForBlockCache(String blockId) {
         String filename = "block-" + blockId + ".dat";
-        return new File(storageManager.getTempDir() + "/" + filename);
+        return new File(SeadroidApplication.getAppContext().getExternalCacheDir() + "/" + filename);
     }
 
     /**
@@ -526,7 +526,7 @@ public class DataManager {
         }
 
         for (Block blk : fileBlocks.blocks) {
-            File tempBlock = new File(storageManager.getTempDir(), blk.blockId);
+            File tempBlock = new File(SeadroidApplication.getAppContext().getExternalCacheDir(), blk.blockId);
             final Pair<String, File> block = sc.getBlock(repoID, fileBlocks, blk.blockId, tempBlock.getPath(), fileSize, monitor);
             final byte[] bytes = FileUtils.readFileToByteArray(block.second);
             final byte[] decryptedBlock = Crypto.decrypt(bytes, encKey, encIv);
@@ -1200,7 +1200,7 @@ public class DataManager {
                     cipher = Crypto.encrypt(buffer, encKey, enkIv);
 
                 final String blkid = Crypto.sha1(cipher);
-                File blk = new File(storageManager.getTempDir(), blkid);
+                File blk = new File(SeadroidApplication.getAppContext().getExternalCacheDir(), blkid);
                 Block block = new Block(blkid, blk.getAbsolutePath(), blk.length(), 0L);
                 seafBlock.blocks.add(block);
                 out = new FileOutputStream(blk);
